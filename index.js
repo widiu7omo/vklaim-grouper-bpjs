@@ -2,8 +2,10 @@ const {PDFDocument} = require('pdf-lib');
 const fs = require('fs');
 const baseUrl = process.cwd();
 const imgExtension = ".jpg";
+const pdfExtension = ".pdf";
 const imgFolderName = '/vklaim-img';
 const pdfFolderName = '/scanned-pdf';
+const resultFolderName = '/result-pdf';
 
 function getExceptionPdf() {
     const data = fs.readFileSync(`${baseUrl}/exception.txt`);
@@ -52,30 +54,34 @@ function initImgFiles() {
     })
 
 }
+function getPDFinUin8Array(filePath){
+    return fs.readFileSync(filePath);
+}
+async function editPDF(file){
+    const filePDF = await PDFDocument.load(getPDFinUin8Array(baseUrl+"/"+file+pdfExtension));
+    const page = filePDF.addPage();
+    page.drawText("Testing Development");
+    const pdfBytes = await filePDF.save();
+    fs.writeFile(baseUrl+resultFolderName+`/${file}_Edited.pdf`, pdfBytes, function () {
+        console.log(`${file}_Edited.pdf Created`);
+    })
+}
 
-
-async function createPDF() {
-    const exception = await getExceptionPdf();
+async function initApp() {
+    const exceptionPdf = await getExceptionPdf();
     const initImg = await initImgFiles();
     const initPdf = await initScannedFiles();
     console.log(initImg.sort(sortAsc));
     console.log(initPdf.sort(sortAsc));
     //get differences
     const differences = initImg.sort(sortAsc).diff(initPdf.sort(sortAsc));
-    console.log(differences);
-    console.log(initImg.length - initPdf.length);
+    console.log(`Data yang dimasukkan masih kurang sesuai, nomor yang belum ${differences}, masih kurang ${initImg.length - initPdf.length} data lagi`);
     //write log pdf
     fs.writeFileSync(baseUrl + '/pdfExist.log', initPdf.sort(function (a, b) {
         return a - b;
     }).join("\n"));
     fs.writeFileSync(baseUrl + '/imgExist.log', initImg.join("\n"));
-    const filePDF = await PDFDocument.create();
-    const page = filePDF.addPage();
-    page.drawText("Testing Development");
-    const pdfBytes = await filePDF.save();
-    fs.writeFile(`${baseUrl}/pdf.pdf`, pdfBytes, function () {
-        console.log('writein')
-    })
+    editPDF("1. MSALMAN");
 }
 
-createPDF();
+initApp();

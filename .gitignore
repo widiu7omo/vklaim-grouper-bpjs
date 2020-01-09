@@ -2,6 +2,8 @@ node_modules
 node_modules/*
 scanned-pdf/*
 vklaim-img/*
+result-pdf/*
 .idea/*
 yarn.lock
 *.log
+*.pdf
