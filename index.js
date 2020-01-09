@@ -9,7 +9,7 @@ const resultFolderName = '/result-pdf/';
 //check who's left scanned pdf
 Array.prototype.diff = function (arr2) {
     return this.filter(x => !arr2.includes(x));
-}
+};
 
 function getExceptionPdf() {
     const data = fs.readFileSync(`${baseUrl}/exception.txt`);
@@ -106,8 +106,7 @@ async function initApp() {
     //looping
     //check is exception exit?
     //true then looping with exception change
-    console.log(initImg.sort(sortAsc));
-    console.log(initPdf.sort(sortAsc));
+
     //get differences
     const arrNumberImg = initImg.map(item => item.number);
     const arrNumberPdf = initPdf.map(item => item.number);
@@ -121,10 +120,10 @@ async function initApp() {
     if (!isDifferent) {
         //process to pdf
         //sorting array
-        const sortedArrayPdf = initPdf.sort(sortAsc)
+        const sortedArrayPdf = initPdf.sort(sortAsc);
         const sortedArrayImg = initImg.sort(sortAsc);
         // for (let i = 0; i < arrNumberImg; i++) {
-        for (let i = 0; i < arrNumberImg; i++) {
+        for (let i = 0; i < arrNumberImg.length; i++) {
             if(!exceptionPdf.includes(i)){
                 const filePDF = getNameOnly(sortedArrayPdf[i].name, 'pdf');
                 const fileIMG = getNameOnly(sortedArrayImg[i].name, 'jpg');
