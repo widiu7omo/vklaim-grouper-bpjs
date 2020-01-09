@@ -1,5 +1,6 @@
 const {PDFDocument} = require('pdf-lib');
 const fs = require('fs');
+const fse = require('fs-extra');
 const baseUrl = process.cwd();
 const imgExtension = ".jpg";
 const pdfExtension = ".pdf";
@@ -96,6 +97,7 @@ async function editPDF({filePDF, fileIMG}) {
 }
 
 async function initApp() {
+    fse.emptyDirSync(baseUrl + resultFolderName);
     const exceptionPdf = await getExceptionPdf();
     const initImg = await initImgFiles();
     const initPdf = await initScannedFiles();
@@ -121,14 +123,24 @@ async function initApp() {
         //process to pdf
         //sorting array
         const sortedArrayPdf = initPdf.sort(sortAsc);
-        const sortedArrayImg = initImg.sort(sortAsc);
+        let sortedArrayImg = initImg.sort(sortAsc);
+        fs.writeFileSync(baseUrl + '/imgExist.log', JSON.stringify(sortedArrayImg));
+
         // for (let i = 0; i < arrNumberImg; i++) {
-        for (let i = 0; i < arrNumberImg.length; i++) {
-            if(!exceptionPdf.includes(i)){
-                const filePDF = getNameOnly(sortedArrayPdf[i].name, 'pdf');
-                const fileIMG = getNameOnly(sortedArrayImg[i].name, 'jpg');
-                await editPDF({filePDF, fileIMG});
+        exceptionPdf.forEach(item => {
+            const exceptionIndex = sortedArrayImg.findIndex(x=>x.number === item);
+            console.log(exceptionIndex)
+            if(exceptionIndex !== -1){
+                sortedArrayImg.splice(exceptionIndex, 1);
             }
+        });
+        const sortedImg = sortedArrayImg.sort(sortAsc);
+        fs.writeFileSync(baseUrl + '/pdfExist.log', JSON.stringify(sortedImg));
+        console.log(sortedImg[exceptionPdf[0]])
+        for (let i = 0; i < sortedImg.length; i++) {
+            const fileIMG = getNameOnly(sortedImg[i].name, 'jpg');
+            const filePDF = getNameOnly(sortedArrayPdf[i].name, 'pdf');
+            await editPDF({filePDF, fileIMG});
         }
     } else {
         console.log(`Data yang dimasukkan masih kurang sesuai, cek pada exception.txt. Nomor yang belum ${differentData}, masih kurang ${initImg.length - initPdf.length} data lagi`);
@@ -136,10 +148,7 @@ async function initApp() {
     }
 
 
-    fs.writeFileSync(baseUrl + '/pdfExist.log', initPdf.sort(function (a, b) {
-        return a - b;
-    }).join("\n"));
-    fs.writeFileSync(baseUrl + '/imgExist.log', initImg.join("\n"));
+
 }
 
 initApp();
