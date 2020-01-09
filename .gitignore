@@ -4,3 +4,4 @@ scanned-pdf/*
 vklaim-img/*
 .idea/*
 yarn.lock
+*.log
