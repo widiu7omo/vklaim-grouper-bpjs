@@ -7,3 +7,4 @@ result-pdf/*
 yarn.lock
 *.log
 *.pdf
+*.jpg

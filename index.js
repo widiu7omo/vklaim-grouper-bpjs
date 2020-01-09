@@ -54,15 +54,28 @@ function initImgFiles() {
     })
 
 }
-function getPDFinUin8Array(filePath){
+
+function getPDFinUin8Array(filePath) {
     return fs.readFileSync(filePath);
 }
-async function editPDF(file){
-    const filePDF = await PDFDocument.load(getPDFinUin8Array(baseUrl+"/"+file+pdfExtension));
+
+
+async function editPDF(file) {
+    const filePDF = await PDFDocument.load(getPDFinUin8Array(baseUrl + "/" + file + pdfExtension));
     const page = filePDF.addPage();
-    page.drawText("Testing Development");
+    const imageToEmbed = await filePDF.embedJpg(getPDFinUin8Array(baseUrl + imgFolderName + `/0001.jpg`));
+    //config for image
+    const imageDims = imageToEmbed.scale(0.25);
+    const options = {
+        x: page.getWidth() / 2 - imageDims.width / 2,
+        y: page.getHeight() / 2 - imageDims.height / 2 ,
+        width: imageDims.width,
+        height: imageDims.height,
+    };
+
+    page.drawImage(imageToEmbed, options);
     const pdfBytes = await filePDF.save();
-    fs.writeFile(baseUrl+resultFolderName+`/${file}_Edited.pdf`, pdfBytes, function () {
+    fs.writeFile(baseUrl + resultFolderName + `/${file}_Edited.pdf`, pdfBytes, function () {
         console.log(`${file}_Edited.pdf Created`);
     })
 }
