@@ -3,9 +3,9 @@ const fs = require('fs');
 const baseUrl = process.cwd();
 const imgExtension = ".jpg";
 const pdfExtension = ".pdf";
-const imgFolderName = '/vklaim-img';
-const pdfFolderName = '/scanned-pdf';
-const resultFolderName = '/result-pdf';
+const imgFolderName = '/vklaim-img/';
+const pdfFolderName = '/scanned-pdf/';
+const resultFolderName = '/result-pdf/';
 //check who's left scanned pdf
 Array.prototype.diff = function (arr2) {
     return this.filter(x => !arr2.includes(x));
@@ -13,7 +13,10 @@ Array.prototype.diff = function (arr2) {
 
 function getExceptionPdf() {
     const data = fs.readFileSync(`${baseUrl}/exception.txt`);
-    return data.toString().split(',');
+    const exception = data.toString().split(',');
+    return exception.map(item => {
+        return parseInt(item);
+    })
 }
 
 function sortAsc(a, b) {
@@ -27,6 +30,13 @@ function getDifferences(arrNumberImg, arrNumberPdf) {
     return arrNumberImg.sort(sortAsc).diff(arrNumberPdf.sort(sortAsc));
 }
 
+function getNameOnly(stringName, type) {
+    if (type === 'pdf') {
+        return stringName.replace(".pdf", "");
+    } else if (type === 'jpg') {
+        return stringName.replace(".jpg", "");
+    }
+}
 
 function initScannedFiles() {
     return new Promise(function (resolve, reject) {
@@ -66,10 +76,10 @@ function getPDFinUin8Array(filePath) {
     return fs.readFileSync(filePath);
 }
 
-async function editPDF(file) {
-    const filePDF = await PDFDocument.load(getPDFinUin8Array(baseUrl + "/" + file + pdfExtension));
-    const page = filePDF.addPage();
-    const imageToEmbed = await filePDF.embedJpg(getPDFinUin8Array(baseUrl + imgFolderName + `/0001.jpg`));
+async function editPDF({filePDF, fileIMG}) {
+    const selectedPDF = await PDFDocument.load(getPDFinUin8Array(`${baseUrl}${pdfFolderName}${filePDF}${pdfExtension}`));
+    const page = selectedPDF.addPage();
+    const imageToEmbed = await selectedPDF.embedJpg(getPDFinUin8Array(`${baseUrl}${imgFolderName}${fileIMG}${imgExtension}`));
     //config for image
     const imageDims = imageToEmbed.scale(0.25);
     const options = {
@@ -79,9 +89,9 @@ async function editPDF(file) {
         height: imageDims.height,
     };
     page.drawImage(imageToEmbed, options);
-    const pdfBytes = await filePDF.save();
-    fs.writeFile(baseUrl + resultFolderName + `/${file}_Edited.pdf`, pdfBytes, function () {
-        console.log(`${file}_Edited.pdf Created`);
+    const pdfBytes = await selectedPDF.save();
+    fs.writeFile(baseUrl + resultFolderName + `${filePDF}_Edited.pdf`, pdfBytes, function () {
+        console.log(`${filePDF}_Edited.pdf Created`);
     })
 }
 
@@ -104,14 +114,22 @@ async function initApp() {
     const differences = getDifferences(arrNumberImg, arrNumberPdf);
     console.log(`Perbedaan tanpa cek pengecualian ${differences}, masih kurang ${initImg.length - initPdf.length} data lagi`);
     //write log pdf
-
     const mergedNumberPdfAndException = [...arrNumberPdf, ...exceptionPdf];
     const isDifferent = getDifferences(arrNumberImg, mergedNumberPdfAndException).length !== 0;
+
     const differentData = getDifferences(arrNumberImg, mergedNumberPdfAndException);
     if (!isDifferent) {
         //process to pdf
+        //sorting array
+        const sortedArrayPdf = initPdf.sort(sortAsc)
+        const sortedArrayImg = initImg.sort(sortAsc);
+        // for (let i = 0; i < arrNumberImg; i++) {
         for (let i = 0; i < arrNumberImg; i++) {
-
+            if(!exceptionPdf.includes(i)){
+                const filePDF = getNameOnly(sortedArrayPdf[i].name, 'pdf');
+                const fileIMG = getNameOnly(sortedArrayImg[i].name, 'jpg');
+                await editPDF({filePDF, fileIMG});
+            }
         }
     } else {
         console.log(`Data yang dimasukkan masih kurang sesuai, cek pada exception.txt. Nomor yang belum ${differentData}, masih kurang ${initImg.length - initPdf.length} data lagi`);
@@ -123,7 +141,6 @@ async function initApp() {
         return a - b;
     }).join("\n"));
     fs.writeFileSync(baseUrl + '/imgExist.log', initImg.join("\n"));
-    editPDF("1. MSALMAN");
 }
 
 initApp();
