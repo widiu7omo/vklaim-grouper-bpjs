@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="134c1b33-c8d6-4775-967e-3487dc99ea2e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imgExist.log" beforeDir="false" afterPath="$PROJECT_DIR$/imgExist.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdfExist.log" beforeDir="false" afterPath="$PROJECT_DIR$/pdfExist.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,11 +23,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.14.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../nodegui/react-nodegui-starter" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -80,6 +76,8 @@
       <workItem from="1578532847546" duration="3786000" />
       <workItem from="1578561746105" duration="3192000" />
       <workItem from="1578565529877" duration="1615000" />
+      <workItem from="1578752341616" duration="1381000" />
+      <workItem from="1578755188584" duration="29000" />
     </task>
     <servers />
   </component>
@@ -91,7 +89,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -110,22 +110,30 @@
       <screen x="0" y="0" width="1360" height="734" />
     </state>
     <state x="439" y="239" width="471" height="284" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1360.734@0.0.1360.734" timestamp="1578585824535" />
-    <state width="1337" height="206" key="GridCell.Tab.0.bottom" timestamp="1578587328028">
-      <screen x="0" y="0" width="1360" height="734" />
+    <state x="466" y="140" width="424" height="508" key="FileChooserDialogImpl" timestamp="1578755215169">
+      <screen x="0" y="25" width="1366" height="743" />
+    </state>
+    <state x="466" y="140" width="424" height="508" key="FileChooserDialogImpl/0.25.1366.743@0.25.1366.743" timestamp="1578755215169" />
+    <state width="1343" height="186" key="GridCell.Tab.0.bottom" timestamp="1578751446019">
+      <screen x="0" y="25" width="1366" height="743" />
     </state>
     <state width="1337" height="206" key="GridCell.Tab.0.bottom/0.0.1360.734@0.0.1360.734" timestamp="1578587328028" />
-    <state width="1337" height="206" key="GridCell.Tab.0.center" timestamp="1578587328028">
-      <screen x="0" y="0" width="1360" height="734" />
+    <state width="1343" height="186" key="GridCell.Tab.0.bottom/0.25.1366.743@0.25.1366.743" timestamp="1578751446019" />
+    <state width="1343" height="186" key="GridCell.Tab.0.center" timestamp="1578751446018">
+      <screen x="0" y="25" width="1366" height="743" />
     </state>
     <state width="1337" height="206" key="GridCell.Tab.0.center/0.0.1360.734@0.0.1360.734" timestamp="1578587328028" />
-    <state width="1337" height="206" key="GridCell.Tab.0.left" timestamp="1578587328027">
-      <screen x="0" y="0" width="1360" height="734" />
+    <state width="1343" height="186" key="GridCell.Tab.0.center/0.25.1366.743@0.25.1366.743" timestamp="1578751446018" />
+    <state width="1343" height="186" key="GridCell.Tab.0.left" timestamp="1578751446018">
+      <screen x="0" y="25" width="1366" height="743" />
     </state>
     <state width="1337" height="206" key="GridCell.Tab.0.left/0.0.1360.734@0.0.1360.734" timestamp="1578587328027" />
-    <state width="1337" height="206" key="GridCell.Tab.0.right" timestamp="1578587328028">
-      <screen x="0" y="0" width="1360" height="734" />
+    <state width="1343" height="186" key="GridCell.Tab.0.left/0.25.1366.743@0.25.1366.743" timestamp="1578751446018" />
+    <state width="1343" height="186" key="GridCell.Tab.0.right" timestamp="1578751446018">
+      <screen x="0" y="25" width="1366" height="743" />
     </state>
     <state width="1337" height="206" key="GridCell.Tab.0.right/0.0.1360.734@0.0.1360.734" timestamp="1578587328028" />
+    <state width="1343" height="186" key="GridCell.Tab.0.right/0.25.1366.743@0.25.1366.743" timestamp="1578751446018" />
     <state width="1337" height="212" key="GridCell.Tab.1.bottom" timestamp="1578565512407">
       <screen x="0" y="0" width="1360" height="734" />
     </state>
@@ -174,10 +182,11 @@
       <screen x="0" y="0" width="1360" height="734" />
     </state>
     <state width="1337" height="212" key="GridCell.Tab.3.right/0.0.1360.734@0.0.1360.734" timestamp="1578565512408" />
-    <state x="184" y="0" width="992" height="734" key="SettingsEditor" timestamp="1578561775561">
-      <screen x="0" y="0" width="1360" height="734" />
+    <state x="218" y="34" width="992" height="734" key="SettingsEditor" timestamp="1578751443476">
+      <screen x="0" y="25" width="1366" height="743" />
     </state>
     <state x="184" y="0" width="992" height="734" key="SettingsEditor/0.0.1360.734@0.0.1360.734" timestamp="1578561775561" />
+    <state x="218" y="34" key="SettingsEditor/0.25.1366.743@0.25.1366.743" timestamp="1578751443476" />
     <state x="344" y="156" key="run.anything.popup" timestamp="1578573940536">
       <screen x="0" y="0" width="1360" height="734" />
     </state>
